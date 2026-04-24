@@ -15,6 +15,11 @@ public class WorkoutClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    private Room room;
+
     private String name;
     private Double price;
     private int duration;

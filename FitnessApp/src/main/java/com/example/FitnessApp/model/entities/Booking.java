@@ -18,6 +18,10 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "workoutclass_id")
+    private WorkoutClass workoutClass;
+
     private LocalDateTime createdAt;
     private BookingStatus status = BookingStatus.NONE;
 

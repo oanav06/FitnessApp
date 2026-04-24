@@ -16,13 +16,11 @@ public class WorkoutClass {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    private String trainer;
-    private int capacity;
     private Double price;
     private int duration;
-
+    private int capacity;
     //room
     //bookings
     //scheduleDateTime
-
+    // private String trainer;
 }

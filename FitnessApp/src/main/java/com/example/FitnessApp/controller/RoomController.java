@@ -1,6 +1,7 @@
 package com.example.FitnessApp.controller;
 
 import com.example.FitnessApp.model.dto.RoomRequestDto;
+import com.example.FitnessApp.model.dto.RoomResponseDto;
 import com.example.FitnessApp.model.entities.Room;
 import com.example.FitnessApp.service.RoomService;
 import lombok.RequiredArgsConstructor;
@@ -16,18 +17,18 @@ public class RoomController {
     private final RoomService roomService;
 
     @PostMapping
-    public Room createRoom(@RequestBody RoomRequestDto dto){
+    public RoomResponseDto createRoom(@RequestBody RoomRequestDto dto){
         return roomService.createRoom(dto);
     }
 
     @GetMapping
-    public List<Room> getAllRooms(){
+    public List<RoomResponseDto> getAllRooms(){
     return roomService.getAllRooms();
 
     }
 
     @GetMapping("/{id}")
-    public Room getRoomById(@PathVariable Long id){
+    public RoomResponseDto getRoomById(@PathVariable Long id){
         return roomService.getRoomById(id);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.FitnessApp.service.impl;
 
 import com.example.FitnessApp.model.dto.RoomRequestDto;
+import com.example.FitnessApp.model.dto.RoomResponseDto;
 import com.example.FitnessApp.model.entities.Room;
 import com.example.FitnessApp.repository.RoomRepository;
 import com.example.FitnessApp.service.RoomService;
@@ -16,21 +17,26 @@ public class RoomServiceImpl implements RoomService {
     private final RoomRepository roomRepository;
 
     @Override
-    public Room createRoom(RoomRequestDto dto) {
+    public RoomResponseDto createRoom(RoomRequestDto dto) {
         Room room = new Room();
         room.setCapacity(dto.capacity());
         room.setName(dto.name());
         Room roomSaved = roomRepository.save(room);
-        return roomSaved;
+
+        return  toDto(roomSaved);
     }
 
     @Override
-    public List<Room> getAllRooms() {
-        return roomRepository.findAll();
+    public List<RoomResponseDto> getAllRooms() {
+        return roomRepository.findAll()
+                .stream()
+                .map(room -> toDto(room))
+                .toList();
     }
 
+
     @Override
-    public Room getRoomById(Long id) {
-        return roomRepository.findById(id).orElseThrow(() -> new RuntimeException("Room not found"));
+    public RoomResponseDto getRoomById(Long id) {
+        return toDto(roomRepository.findById(id).orElseThrow(() -> new RuntimeException("Room not found")));
     }
 }

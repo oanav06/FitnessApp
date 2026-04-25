@@ -1,5 +1,7 @@
 package com.example.FitnessApp.service.impl;
 
+import com.example.FitnessApp.model.dto.WorkoutClassRequestDto;
+import com.example.FitnessApp.model.dto.WorkoutClassResponseDto;
 import com.example.FitnessApp.model.entities.WorkoutClass;
 import com.example.FitnessApp.repository.WorkoutClassRepository;
 import com.example.FitnessApp.service.WorkoutClassService;
@@ -15,28 +17,39 @@ public class WorkoutClassServiceImpl implements WorkoutClassService {
 private final WorkoutClassRepository workoutClassRepository;
 
     @Override
-    public WorkoutClass createWorkoutClass(WorkoutClass workoutClass) {
-        return workoutClassRepository.save(workoutClass);
+    public WorkoutClassResponseDto createWorkoutClass(WorkoutClassRequestDto dto) {
+       WorkoutClass workoutClass = new WorkoutClass();
+       workoutClass.setName(dto.name());
+       workoutClass.setPrice(dto.price());
+       workoutClass.setDuration(dto.duration());
+       workoutClass.setCapacity(dto.capacity());
+       WorkoutClass savedWorkoutClass = workoutClassRepository.save(workoutClass);
+
+       return toDto(savedWorkoutClass);
+    }
+
+
+    @Override
+    public List<WorkoutClassResponseDto> getAllWorkoutClasses() {
+        return workoutClassRepository.findAll().stream()
+                .map(this::toDto)
+                .toList();
     }
 
     @Override
-    public List<WorkoutClass> getAllWorkoutClasses() {
-        return workoutClassRepository.findAll();
+    public WorkoutClassResponseDto getWorkoutCLassById(Long id) {
+        return toDto(workoutClassRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Class not found with id: " + id)));
     }
 
     @Override
-    public WorkoutClass getWorkoutCLassById(Long id) {
-        return workoutClassRepository.findById(id).orElseThrow(()-> new RuntimeException("Class not found with id: " + id));
-    }
-
-    @Override
-    public WorkoutClass updateWorkoutClass(Long id, WorkoutClass workoutClass) {
+    public WorkoutClassResponseDto updateWorkoutClass(Long id, WorkoutClassRequestDto dto) {
         WorkoutClass workoutClassFound = workoutClassRepository.findById(id).orElseThrow(()-> new RuntimeException("Class not found: " + id));
-        workoutClassFound.setPrice(workoutClass.getPrice());
-        workoutClassFound.setName(workoutClass.getName());
-        workoutClassFound.setDuration(workoutClass.getDuration());
-        workoutClassFound.setCapacity(workoutClass.getCapacity());
-        return workoutClassRepository.save(workoutClassFound);
+        workoutClassFound.setName(dto.name());
+        workoutClassFound.setPrice(dto.price());
+        workoutClassFound.setDuration(dto.duration());
+        workoutClassFound.setCapacity(dto.capacity());
+        return toDto(workoutClassRepository.save(workoutClassFound));
     }
 
     @Override

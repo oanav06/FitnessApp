@@ -1,6 +1,7 @@
 package com.example.FitnessApp.controller;
 
-import com.example.FitnessApp.model.entities.WorkoutClass;
+import com.example.FitnessApp.model.dto.WorkoutClassRequestDto;
+import com.example.FitnessApp.model.dto.WorkoutClassResponseDto;
 import com.example.FitnessApp.service.WorkoutClassService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -17,25 +18,25 @@ public class WorkoutClassController {
 
     @Operation(summary = "Save a workoutclass in DB")
     @PostMapping
-    public WorkoutClass createWorkoutClass(@RequestBody WorkoutClass workoutClass){
-        return workoutClassService.createWorkoutClass(workoutClass);
+    public WorkoutClassResponseDto createWorkoutClass(@RequestBody WorkoutClassRequestDto dto){
+        return workoutClassService.createWorkoutClass(dto);
     }
 
     @Operation(summary = "Get all workoutclasses from DB")
     @GetMapping
-    public List<WorkoutClass> getAllWorkoutclasses(){
+    public List<WorkoutClassResponseDto> getAllWorkoutclasses(){
         return workoutClassService.getAllWorkoutClasses();
     }
 
     @Operation(summary = "Get a workoutclass by id")
     @GetMapping("/{id}")
-    public WorkoutClass getWorkoutClassById(@PathVariable Long id){
+    public WorkoutClassResponseDto getWorkoutClassById(@PathVariable Long id){
         return workoutClassService.getWorkoutCLassById(id);
     }
 
     @Operation(summary = "Update workoutclass")
      @PutMapping("/{id}")
-    public WorkoutClass updateWorkoutClass(@PathVariable Long id,@RequestBody WorkoutClass workoutClass){
+    public WorkoutClassResponseDto updateWorkoutClass(@PathVariable Long id,@RequestBody WorkoutClassRequestDto workoutClass){
          return workoutClassService.updateWorkoutClass(id, workoutClass);
      }
 

@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "bookings")
@@ -22,7 +22,7 @@ public class Booking {
     @JoinColumn(name = "workoutclass_id")
     private WorkoutClass workoutClass;
 
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
     private BookingStatus status = BookingStatus.NONE;
 
 

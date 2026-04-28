@@ -15,7 +15,10 @@ public interface BookingService {
                 booking.getId(),
                 booking.getWorkoutClass().getId(),
                 booking.getWorkoutClass().getName(),
-                booking.getWorkoutClass().getRoom().getName(),
+                //booking.getWorkoutClass().getRoom().getName(),
+                booking.getWorkoutClass().getRoom() != null
+                        ? booking.getWorkoutClass().getRoom().getName()
+                        : null,
                 booking.getCreatedAt(),
                 booking.getStatus()
         );

@@ -25,6 +25,9 @@ private final WorkoutClassRepository workoutClassRepository;
        workoutClass.setPrice(dto.price());
        workoutClass.setDuration(dto.duration());
        workoutClass.setCapacity(dto.capacity());
+        Room room = roomRepository.findById(dto.roomId())
+        .orElseThrow(() -> new RuntimeException("Room not found"));
+    workoutClass.setRoom(room);
        WorkoutClass savedWorkoutClass = workoutClassRepository.save(workoutClass);
 
        return toDto(savedWorkoutClass);
